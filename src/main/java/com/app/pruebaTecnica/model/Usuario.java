@@ -14,20 +14,19 @@ import javax.persistence.Table;
 @Table(name="usuario")
 public class Usuario {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique=true)
 	private Integer id_user;
-	@Column(nullable=true, length=255)
+	@Column(nullable=true, length=50)
 	private String nombres;
-	@Column(nullable=true, length=255)
+	@Column(nullable=true, length=50)
 	private String apellidos;
-	@Column(nullable=false, length=255)
+	@Column(nullable=false, length=50)
 	private String email;
-	@Column(length=255)
+	@Column(length=60)
 	private String password;
-	private int activo;
-	@ManyToOne(fetch = FetchType.EAGER)
+	private boolean activo;
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_rol")
 	private Role role;
 	
@@ -35,7 +34,7 @@ public class Usuario {
 		super();
 	}
 	
-	public Usuario(String email, String password, int activo, Role role) {
+	public Usuario(String email, String password, boolean activo, Role role) {
 		super();
 		this.email = email;
 		this.password = password;
@@ -88,11 +87,11 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public int getActivo() {
+	public boolean getActivo() {
 		return activo;
 	}
 
-	public void setActivo(int activo) {
+	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
 
