@@ -12,7 +12,7 @@ public class MainConrtoller {
 	@Autowired
 	private UsuarioServ service;
 	
-	@GetMapping("/")
+	@GetMapping("/login")
 	public void valoresIniciales() {
 		service.inicializar();
 	}
