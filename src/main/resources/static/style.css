@@ -1,0 +1,21 @@
+body{
+	background-color :hsla(89, 43%, 51%, 0.3);
+}
+
+div {
+	text-align : center;
+}
+
+table {
+    border     : 2px solid gray;
+    font-size  : 110%;
+    text-align : center;
+}
+ 
+table tbody  tr {
+    cursor : pointer;
+}
+
+input {
+    padding: 0.9%;
+}
