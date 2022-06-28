@@ -1,14 +1,21 @@
 package com.app.pruebaTecnica.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.app.pruebaTecnica.model.Direccion;
 import com.app.pruebaTecnica.model.Usuario;
 import com.app.pruebaTecnica.repo.UsuarioRepository;
+
+import net.bytebuddy.utility.RandomString;
 
 
 @Service
@@ -17,9 +24,7 @@ public class UsuarioServ {
 	@Autowired
 	private UsuarioRepository data;
 	@Autowired
-	private DireccionService direcciones;
-	@Autowired
-	private MunicipioService municipios;
+    private JavaMailSender mailsender;
 	
 	public List<Usuario> listar() {
 		return data.findAll();
@@ -47,10 +52,21 @@ public class UsuarioServ {
 
 	
 	public Usuario guardar(Usuario user) {
-		String encodedPass = encriptar(user.getPassword());
-		user.setPassword(encodedPass); //Se guarda el password encriptado
+		String otp = RandomString.make(8);
+		user.setPassword(encriptar(otp));
 		
-		return data.save(user);
+		Usuario u = data.save(user);
+		try {
+			permitirAcceso(u.getId_user(), otp);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return u;
 	}
 	
 	public Usuario actualizar(Usuario user) {
@@ -68,4 +84,17 @@ public class UsuarioServ {
 		data.deleteById(id);
 	}
 
+	//Envia correo de acceso
+    public void permitirAcceso(Integer id, String otp) throws UnsupportedEncodingException, MessagingException {
+    	MimeMessage mensaje = mailsender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mensaje);
+		Usuario user = listarId(id);
+    	helper.setFrom("mr14015@clases.edu.sv","Marcelo Molina");
+    	helper.setTo(user.getEmail());
+    	helper.setSubject("Token de acceso");
+    	helper.setText("<p>Usted ha creado su cuenta exitosamente.<br>" +
+    	"Su nueva clave de acceso es: <b>"+ otp +"</b></p>", true);
+    	
+    	mailsender.send(mensaje);
+    }
 }
