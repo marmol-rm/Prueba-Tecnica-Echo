@@ -21,17 +21,18 @@ public class RoleService {
 	}
 
 	
-	public Role listarId(int id) {
+	public Role listarId(Integer id) {
 		
 		return data.findById(id).orElse(null);
 	}
 	
 	public Role guardar(Role r) {
-		
-		return data.save(r);
+		if(data.existsById(r.getId_rol()))
+			return data.save(r);
+		else return null;
 	}
 	
-	public void eliminar(int id) {
+	public void eliminar(Integer id) {
 		
 		data.deleteById(id);
 	}

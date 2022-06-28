@@ -21,7 +21,7 @@ public class UsuarioServ {
 	}
 
 
-	public Usuario listarId(int id) {
+	public Usuario listarId(Integer id) {
 
 		return data.findById(id).orElse(null);
 	}
@@ -48,7 +48,7 @@ public class UsuarioServ {
 	}
 
 	
-	public void eliminar(int id) {
+	public void eliminar(Integer id) {
 		data.deleteById(id);
 	}
 
