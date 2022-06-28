@@ -144,6 +144,9 @@ public class UsuarioServ {
 		if(n == 0) { //Crea tipos de solicitud
 			Municipio m1 = new Municipio("San Salvador", dep_data.findById(1).orElse(null));
 			Municipio m2 = new Municipio("Santa Tecla", dep_data.findById(1).orElse(null));
+			
+			mun_data.save(m1);
+			mun_data.save(m2);
 		}
 	}
 }
