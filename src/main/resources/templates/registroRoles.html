@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" lang="es">
+<title>Registro Usuario</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="http://localhost:8000/style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <a class="navbar-brand" href="/">
+  	
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+  aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/">Inicio <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="/usuarios">Usuarios</a>
+    </div>
+  </div>
+  <span class="navbar-text">
+  GESTION DE USUARIOS &nbsp;&nbsp;&nbsp;
+    <a href="/logout">Salir</a>
+  </span>
+</nav>
+		<div class="container mt-5">
+		<div class="col-sm-5">
+		<form th:action="@{/roles/save}" th:object=${rol} method="POST">
+			<div class="card"></div>
+			<div class="card-header">
+				<h3>Registro de Permisos</h3>
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+					<h5>Nombre del nuevo rol:</h5>
+					<input required th:field="*{nombre}" type="text" class="form-control"/>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+					<h5>Descripcion:</h5>
+					<input required th:field="*{descripcion}" type="text" class="form-control"/>
+				</div>
+			</div>
+			<div class="card-footer">
+				<input type="submit" value="Guardar" class="btn btn-success"/>
+				<a href="/usuarios/all" class="btn btn-danger">Cancelar</a>
+			</div>
+		</form>
+		<br>
+		</div>
+	</div>
+	<script src="http://localhost:8000/funciones.js" language="javascript"></script>
+</body>
+</html>

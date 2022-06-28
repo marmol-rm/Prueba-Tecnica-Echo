@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.app.pruebaTecnica.model.Direccion;
 import com.app.pruebaTecnica.model.Usuario;
 import com.app.pruebaTecnica.repo.UsuarioRepository;
 
@@ -15,6 +16,10 @@ public class UsuarioServ {
 	
 	@Autowired
 	private UsuarioRepository data;
+	@Autowired
+	private DireccionService direcciones;
+	@Autowired
+	private MunicipioService municipios;
 	
 	public List<Usuario> listar() {
 		return data.findAll();
@@ -45,10 +50,7 @@ public class UsuarioServ {
 		String encodedPass = encriptar(user.getPassword());
 		user.setPassword(encodedPass); //Se guarda el password encriptado
 		
-		int r = user.getRole().getId_rol();
-		if(r != 0)
-			return data.save(user);
-		else return null;
+		return data.save(user);
 	}
 	
 	public Usuario actualizar(Usuario user) {

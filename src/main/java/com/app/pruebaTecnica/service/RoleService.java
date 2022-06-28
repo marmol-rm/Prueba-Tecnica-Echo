@@ -27,6 +27,10 @@ public class RoleService {
 	}
 	
 	public Role guardar(Role r) {
+		return data.save(r);
+	}
+	
+	public Role actualizar(Role r) {
 		if(data.existsById(r.getId_rol()))
 			return data.save(r);
 		else return null;

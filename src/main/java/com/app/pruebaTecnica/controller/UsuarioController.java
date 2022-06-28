@@ -1,7 +1,5 @@
 package com.app.pruebaTecnica.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,14 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.app.pruebaTecnica.model.Municipio;
-import com.app.pruebaTecnica.model.Role;
+import com.app.pruebaTecnica.model.Direccion;
 import com.app.pruebaTecnica.model.Usuario;
+import com.app.pruebaTecnica.service.DireccionService;
 import com.app.pruebaTecnica.service.MunicipioService;
 import com.app.pruebaTecnica.service.RoleService;
 import com.app.pruebaTecnica.service.UsuarioServ;
+
 
 @Controller
 @RequestMapping("/usuarios")
@@ -29,15 +27,14 @@ public class UsuarioController {
 	private RoleService roles;
 	@Autowired
 	private MunicipioService municipios;
+	@Autowired
+	private DireccionService direcciones;
 	
-	private List<Municipio> listaMuni = municipios.listar();
-	private List<Role> listaRoles = roles.listar();
 	
 	@GetMapping("/all")
-	public String form_consultar(@RequestParam(value="buscar",
-	required=false) String palabra, Model model) {
-		
-		model.addAttribute("usuarios");
+	public String form_consultar(Model model) {
+
+		model.addAttribute("usuarios", usuarios.listar());
 		
 		return "listaUsuarios";
 	}
@@ -45,25 +42,27 @@ public class UsuarioController {
 	@GetMapping("/registro")
 	public String form_registro(Model model) {
 		model.addAttribute("user", new Usuario());
-		model.addAttribute("roles", listaRoles);
-		model.addAttribute("municipios", listaMuni);
+		model.addAttribute("dir", new Direccion());
+		model.addAttribute("roles", roles.listar());
+		model.addAttribute("municipios", municipios.listar());
 		
-		return "agregarUsuario";
+		return "registroUsuario";
 	}
 	
 	@GetMapping("/editar/{id}")
 	public String form_editar(@PathVariable Integer id, Model model) {
 		Usuario user = usuarios.listarId(id);
 		model.addAttribute("user", user);
-		model.addAttribute("roles", listaRoles);
-		model.addAttribute("municipios", listaMuni);
+		model.addAttribute("roles", roles.listar());
+		model.addAttribute("municipios", municipios.listar());
 		
 		return "editarUsuario";
 	}
 	
 	
 	@PostMapping("/save")
-	public String registro(@Validated Usuario user) {		
+	public String registro(@Validated Usuario user) {
+		direcciones.guardar(user.getDireccion());
 		usuarios.guardar(user);
 		
 		return "redirect:/usuarios/all";

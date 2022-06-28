@@ -2,12 +2,12 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Usuarios - Facultad de Quimica y Farmacia</title>
+<title>Inicio</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
-<link rel="stylesheet" href="http://localhost:8000/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -21,7 +21,7 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="/">Inicio <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="/usuarios/all">Usuarios</a>
+      <a class="nav-item nav-link" href="/usuarios">Usuarios</a>
     </div>
   </div>
   <span class="navbar-text">
@@ -32,50 +32,23 @@
 	<div class="row mt-3">
 	  <div class="col"></div>
 	  <div class="col">
-		<h2>Lista de Usuarios</h2></div>  
+		<h2>Ups! Algo salió mal</h2>
+	  </div>
 	<div class="col"></div>
 	</div>
 	<br/>
 	<div class="row">
   <div class="col"></div>
   <div class="col">
-  	
+  <img src="alert.png" width="200" height="200" alt="">
+  <br/>
+  <br/>
+  <a href="/" class="btn btn-primary">Ir a inicio</a>
   </div>
   <div class="col"></div>
 	</div>
-	<div class="container mt-4">
-		<table class="table table-bordered table-striped table-hover">
-			<thead>
-				<tr>
-					<th>NOMBRES</th>
-					<th>APELLIDOS</th>
-					<th>EMAIL</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="v:${usuarios}">
-					<td th:text="${v.getNombres()}"></td>
-					<td th:text="${v.getApellidos()}"></td>
-					<td th:text="${v.getEmail()}"></td>
-					<td>
-					<!-- <a class="btn btn-danger" th:href="@{/usuarios/edit/}+${v.id_user}">Editar</a> -->
-					<a class="btn btn-danger" th:onclick="eliminarUsuario([[${v.id_user}]])">Eliminar</a> 
-					</td>
-				</tr>
-			</tbody>
-		</table>
-        <br/>
-        <div class="row">
-	  <div class="col"></div>
-	  <div class="col"><a th:href="@{/usuarios/registro}" class="btn btn-success">+Crear</a></div>
-	  <div class="col"></div>
-	</div>
-	<br>
-	<br>
-	</div>
-	<script src="http://localhost:8000/funciones.js" language="javascript"></script>
+	<script src="funciones.js" language="javascript"></script>
 	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 	crossorigin="anonymous"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 </html>

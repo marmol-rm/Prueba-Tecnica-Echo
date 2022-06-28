@@ -18,13 +18,13 @@ function eliminarUsuario(id) {
 .then((Ok) => {
   if (Ok) {
     $.ajax({
-      url:"/deleteUser/"+id,
+      url:"/usuarios/del/"+id,
       success: function(res){
         console.log(res);
       }
     }).then((Ok)=>{
       if(Ok){
-        location.href="/usuarios";
+        location.href="/usuarios/all";
       }
     });
     swal("Eliminado!", {

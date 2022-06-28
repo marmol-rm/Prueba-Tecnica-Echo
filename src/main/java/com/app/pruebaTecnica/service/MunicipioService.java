@@ -17,4 +17,8 @@ public class MunicipioService {
 	public List<Municipio> listar() {
 		return data.findAll();
 	}
+	
+	public Municipio listarId(Integer id) {
+		return data.findById(id).orElse(null);
+	}
 }

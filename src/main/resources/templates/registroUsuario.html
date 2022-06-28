@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" lang="es">
+<title>Registro Usuario</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="http://localhost:8000/style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <a class="navbar-brand" href="/">
+  	
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+  aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/">Inicio <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="/usuarios">Usuarios</a>
+    </div>
+  </div>
+  <span class="navbar-text">
+  GESTION DE USUARIOS &nbsp;&nbsp;&nbsp;
+    <a href="/logout">Salir</a>
+  </span>
+</nav>
+		<div class="container mt-5">
+		<div class="col-sm-5">
+		<form th:action="@{/usuarios/save}" th:object=${user} method="POST">
+			<div class="card"></div>
+			<div class="card-header">
+				<h3>Registro de Usuario</h3>
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+					<h5>Rol:</h5>
+					<select required="required" th:field="*{role.id_rol}" class="form-control">
+						<option value=0>Asigne un rol...</option>
+						<option th:each="v:${roles}"  
+						th:value="${v.getId_rol()}" th:text="${v.getNombre()}"></option>
+					</select>
+					<a href="/roles/registro" style="font-size: x-small; margin-right: 300px;">Agregar nuevo rol</a>
+				</div>
+				<div class="form-group">
+					<h5>E-mail:</h5>
+					<input required th:field="*{email}" type="email" placeholder="Ingrese un correo valido..." class="form-control"/>
+				</div>
+				<div class="form-group">
+					<h5>Nombres:</h5>
+					<input required th:field="*{nombres}" type="text" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<h5>Apellidos:</h5>
+					<input required th:field="*{apellidos}" type="text" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<h5>Contraseña</h5>
+					<input required th:field="*{password}" type="password" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<h5>Activo?</h5>
+					<input th:field="*{activo}" value="false" type="checkbox" title="(no activo)" class="form-control"/>
+					<label>NO</label>
+					<input th:field="*{activo}" value="true" type="checkbox" title="(activo)" class="form-control" checked="checked"/>
+					<label>SI</label>
+				</div>
+				<div class="form-group">
+					<h5>Municipio:</h5>
+					<select required="required" th:field="*{direccion.municipio.id_municipio}" class="form-control">
+						<option value=0 >Seleccione su municipio...</option>
+						<option th:each="v:${municipios}"  
+						th:value="${v.getId_municipio()}" th:text="${v.getNom_municipio()}"></option>
+					</select>
+				</div>
+				<div class="form-group">
+					<h5>Direccion:</h5>
+					<input required th:field="*{direccion.direccion}" type="text" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<h5>Telefono:</h5>
+					<input required th:field="*{direccion.telefono}" type="text" class="form-control"/>
+				</div>
+			</div>
+			<div class="card-footer">
+				<input type="submit" value="Guardar" class="btn btn-success"/>
+				<a href="/usuarios/all" class="btn btn-danger">Cancelar</a>
+			</div>
+		</form>
+		<br>
+		</div>
+	</div>
+	<script src="http://localhost:8000/funciones.js" language="javascript"></script>
+</body>
+</html>
