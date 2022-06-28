@@ -12,7 +12,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.app.pruebaTecnica.model.Departamento;
+import com.app.pruebaTecnica.model.Municipio;
+import com.app.pruebaTecnica.model.Pais;
 import com.app.pruebaTecnica.model.Usuario;
+import com.app.pruebaTecnica.repo.DepartamentoRepository;
+import com.app.pruebaTecnica.repo.MunicipioRepository;
+import com.app.pruebaTecnica.repo.PaisRepository;
 import com.app.pruebaTecnica.repo.UsuarioRepository;
 
 import net.bytebuddy.utility.RandomString;
@@ -23,6 +29,12 @@ public class UsuarioServ {
 	
 	@Autowired
 	private UsuarioRepository data;
+	@Autowired
+	private PaisRepository pais_data;
+	@Autowired
+	private DepartamentoRepository dep_data;
+	@Autowired
+	private MunicipioRepository mun_data;
 	@Autowired
     private JavaMailSender mailsender;
 	
@@ -97,4 +109,41 @@ public class UsuarioServ {
     	
     	mailsender.send(mensaje);
     }
+    
+    public void inicializar() {
+		long n;
+		
+		n = data.count();
+		if(n == 0) { //Crea el usuario admin
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String pass = encoder.encode("sysadmin");
+			Usuario admin = new Usuario("Admin","Admin","admin",pass,true);
+			data.save(admin);
+		}
+
+		
+    	n = pais_data.count();
+		if(n == 0) { //Crea tipos de solicitud
+			Pais slv = new Pais("El Salvador","SLV");
+			
+			pais_data.save(slv);
+		}
+		
+		n = dep_data.count();
+		if(n == 0) { //Crea tipos de solicitud
+			Departamento d1 = new Departamento("San Salvador", pais_data.findById(1).orElse(null));
+			Departamento d2 = new Departamento("Santa Ana", pais_data.findById(1).orElse(null));
+			Departamento d3 = new Departamento("La Libertad", pais_data.findById(1).orElse(null));
+			
+			dep_data.save(d1);
+			dep_data.save(d2);
+			dep_data.save(d3);
+		}
+		
+		n = mun_data.count();
+		if(n == 0) { //Crea tipos de solicitud
+			Municipio m1 = new Municipio("San Salvador", dep_data.findById(1).orElse(null));
+			Municipio m2 = new Municipio("Santa Tecla", dep_data.findById(1).orElse(null));
+		}
+	}
 }

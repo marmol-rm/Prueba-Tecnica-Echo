@@ -38,16 +38,13 @@ public class Usuario {
 	}
 	
 
-	public Usuario(String nombres, String apellidos, String email, String password, boolean activo, Role role,
-			Direccion direccion) {
+	public Usuario(String nombres, String apellidos, String email, String password, boolean activo) {
 		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.password = password;
 		this.activo = activo;
-		this.role = role;
-		this.direccion = direccion;
 	}
 
 

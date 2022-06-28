@@ -33,11 +33,10 @@ public class Municipio {
 	}
 	
 
-	public Municipio(String nom_municipio, Departamento departamento, List<Direccion> direcciones) {
+	public Municipio(String nom_municipio, Departamento departamento) {
 		super();
 		this.nom_municipio = nom_municipio;
 		this.departamento = departamento;
-		this.direcciones = direcciones;
 	}
 
 
