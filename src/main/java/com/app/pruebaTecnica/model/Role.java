@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,9 +23,10 @@ public class Role {
 	private String nombre;
 	@Column(length=255)
 	private String descripcion;
-	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_permiso")
-	private List<Permiso> permisos;
+	@OneToMany(mappedBy = "rol", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	private List<PermisoPorRol> permisos;
+	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+	private List<Usuario> usuarios;
 	
 	public Role() {
 		super();
@@ -34,7 +34,6 @@ public class Role {
 
 	public Role(String nombre, String descripcion) {
 		super();
-		//this.id_rol = id_rol;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}
@@ -61,5 +60,13 @@ public class Role {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public List<PermisoPorRol> getPermisos() {
+		return permisos;
+	}
+
+	public void setPermisos(List<PermisoPorRol> permisos) {
+		this.permisos = permisos;
 	}
 }

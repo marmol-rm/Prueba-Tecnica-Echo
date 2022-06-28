@@ -29,18 +29,27 @@ public class Usuario {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_rol")
 	private Role role;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_direccion")
+	private Direccion direccion;
 	
 	public Usuario() {
 		super();
 	}
 	
-	public Usuario(String email, String password, boolean activo, Role role) {
+
+	public Usuario(String nombres, String apellidos, String email, String password, boolean activo, Role role,
+			Direccion direccion) {
 		super();
+		this.nombres = nombres;
+		this.apellidos = apellidos;
 		this.email = email;
 		this.password = password;
 		this.activo = activo;
 		this.role = role;
+		this.direccion = direccion;
 	}
+
 
 	public String getNombre_completo() {
 		String completo = this.getNombres() + " " + this.getApellidos();
@@ -102,4 +111,13 @@ public class Usuario {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
+	}
+	
 }
