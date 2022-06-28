@@ -42,9 +42,23 @@ public class UsuarioServ {
 
 	
 	public Usuario guardar(Usuario user) {
-		user.setPassword(encriptar(user.getPassword()));
+		String encodedPass = encriptar(user.getPassword());
+		user.setPassword(encodedPass); //Se guarda el password encriptado
 		
-		return data.save(user);
+		int r = user.getRole().getId_rol();
+		if(r != 0)
+			return data.save(user);
+		else return null;
+	}
+	
+	public Usuario actualizar(Usuario user) {
+		if(data.existsById(user.getId_user())) {
+			int r = user.getRole().getId_rol();
+			if(r != 0)
+				return data.save(user);
+			else return null;
+		}
+		else return null;
 	}
 
 	
