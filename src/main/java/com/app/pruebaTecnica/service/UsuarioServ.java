@@ -119,18 +119,21 @@ public class UsuarioServ {
 			String pass = encoder.encode("sysadmin");
 			Usuario admin = new Usuario("Admin","Admin","admin",pass,true);
 			data.save(admin);
+			
+			n = 0;
 		}
 
 		
     	n = pais_data.count();
-		if(n == 0) { //Crea tipos de solicitud
+		if(n == 0) {
 			Pais slv = new Pais("El Salvador","SLV");
 			
 			pais_data.save(slv);
+			n = 0;
 		}
 		
 		n = dep_data.count();
-		if(n == 0) { //Crea tipos de solicitud
+		if(n == 0) {
 			Departamento d1 = new Departamento("San Salvador", pais_data.findById(1).orElse(null));
 			Departamento d2 = new Departamento("Santa Ana", pais_data.findById(1).orElse(null));
 			Departamento d3 = new Departamento("La Libertad", pais_data.findById(1).orElse(null));
@@ -138,15 +141,19 @@ public class UsuarioServ {
 			dep_data.save(d1);
 			dep_data.save(d2);
 			dep_data.save(d3);
+			n = 0;
 		}
 		
 		n = mun_data.count();
-		if(n == 0) { //Crea tipos de solicitud
+		System.out.println(n);
+		if(n == 0) {
 			Municipio m1 = new Municipio("San Salvador", dep_data.findById(1).orElse(null));
 			Municipio m2 = new Municipio("Santa Tecla", dep_data.findById(1).orElse(null));
 			
 			mun_data.save(m1);
 			mun_data.save(m2);
+			
+			n = 0;
 		}
 	}
 }
